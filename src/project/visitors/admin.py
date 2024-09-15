@@ -5,6 +5,7 @@ from .forms import VisitorForm
 from django.utils.safestring import mark_safe
 from django.urls import reverse
 from project.utils.admin.utils import model_admin_url
+from datetime import datetime
 
 
 @admin.register(Visitor)
@@ -13,7 +14,7 @@ class VisitorAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             None,
-            {"fields": ("fio", "phone_number", "mail", "address", "is_child", "children")}
+            {"fields": ("fio", "birth_data", "phone_number", "mail", "address", "is_child", "children", "parent_problem",)}
         ),
         (
             _("Problem"),
@@ -27,11 +28,18 @@ class VisitorAdmin(admin.ModelAdmin):
     readonly_fields = ("create", "update")
     list_filter = ("fio", "phone_number", "mail", "address", "is_child")
     
-    list_display = ("fio", "is_child", "phone_number", "mail", "address", "get_children_count", "parent")
+    list_display = ("fio", "age", "is_child", "phone_number", "mail", "address", "get_children_count", "parent")
 
     list_per_page = 50
 
     search_fields = ("fio", "phone_number", "mail", "address", "is_child")
+
+    @admin.display(description=_("Age"), ordering="birth_data")
+    def age(self, obj):
+        if not obj.birth_data:
+            return None
+        now = datetime.now()
+        return now.date().year - obj.birth_data.year
 
     @admin.display(description="Children count", ordering="children")
     def get_children_count(self, obj):
@@ -40,7 +48,7 @@ class VisitorAdmin(admin.ModelAdmin):
         else:
             return None
 
-    @admin.display(description=_("Parent"))
+    @admin.display(description=_("Parent"), ordering="fio")
     def parent(self, obj):
         if obj.is_child:
             display = Visitor.objects.get(children=obj.pk)
@@ -50,10 +58,10 @@ class VisitorAdmin(admin.ModelAdmin):
 
 
 @admin.register(Parent)
-class VisitorAdmin(VisitorAdmin):
-    pass
+class ParentAdmin(VisitorAdmin):
+    list_display = ("fio", "age", "phone_number", "mail", "address", "get_children_count")
 
 
 @admin.register(Child)
-class VisitorAdmin(VisitorAdmin):
-    pass
+class ChildAdmin(VisitorAdmin):
+    list_display = ("fio", "age", "parent", "reason_for_request")
