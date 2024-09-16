@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import SpecialistTypes, WorkingDays, Employees
 from django.utils.translation import gettext_lazy as _
+
+from .models import Employees, SpecialistTypes, WorkingDays
 
 
 @admin.register(SpecialistTypes)
@@ -56,7 +57,7 @@ class EmployeesAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             None,
-            {"fields": ("fio", "specialist_type", "working_days")}
+            {"fields": ("user", "specialist_type", "working_days")}
         ),
         (
             _("System information"), {"fields": ("create", "update")}
@@ -64,13 +65,18 @@ class EmployeesAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = ("create", "update")
-    list_filter = ("fio", "specialist_type", "working_days")
+    list_filter = ("user", "specialist_type", "working_days")
 
-    list_display = ("fio", "specialist_type", "get_working_days")
+    list_display = ("get_full_name", "specialist_type", "get_working_days")
 
     list_per_page = 50
 
-    search_fields = ("fio", "specialist_type", "working_days")
+    search_fields = ("user", "specialist_type", "working_days")
+
+    @admin.display(description=_("Full name"))
+    def get_full_name(self, obj):
+        return obj.user.get_full_name()
+
 
     @admin.display(description=_("Working days"))
     def get_working_days(self, obj):

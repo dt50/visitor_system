@@ -3,6 +3,7 @@ from phonenumber_field.formfields import SplitPhoneNumberField
 
 from .models import Visitor
 
+
 class VisitorForm(forms.ModelForm):
     phone_number = SplitPhoneNumberField(initial="RU", required=False)
     class Meta:

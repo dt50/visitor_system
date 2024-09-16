@@ -1,8 +1,6 @@
-from django.db.models import (PROTECT, BooleanField, CharField, DateTimeField,
-                              ForeignKey, Model)
+from django.db.models import (DateTimeField,
+                              Model)
 from django.utils.translation import gettext as _
-from model_utils import Choices
-from model_utils.fields import StatusField
 
 
 class BaseModel(Model):

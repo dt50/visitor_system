@@ -1,7 +1,9 @@
-from django.db.models import CharField, ForeignKey, PROTECT, SmallIntegerField, ManyToManyField
+from django.db.models import (PROTECT, CharField, ForeignKey, ManyToManyField,
+                              SmallIntegerField)
+from django.utils.translation import gettext_lazy as _
 
 from project.utils.models import BaseModel
-from django.utils.translation import gettext_lazy as _
+
 
 class SpecialistTypes(BaseModel):
     name = CharField(_("Specialist type name"), max_length=255)
@@ -38,7 +40,7 @@ class WorkingDays(BaseModel):
         return self.name
 
 class Employees(BaseModel):
-    fio = CharField(max_length=255)
+    user = ForeignKey("auth.User", related_name="employees", on_delete=PROTECT)
     specialist_type = ForeignKey(SpecialistTypes, on_delete=PROTECT, verbose_name=_("Specialist type"))
     working_days = ManyToManyField(WorkingDays, verbose_name=_("Working days"), blank=True)
 
@@ -47,10 +49,10 @@ class Employees(BaseModel):
         db_table_comment = "Table include data of all employees"
 
         get_latest_by = "update"
-        ordering = ("update", "fio")
+        ordering = ("update", "user")
 
         verbose_name = _("Employee")
         verbose_name_plural = _("Employees")
 
     def __str__(self):
-        return "{type} {fio}".format(type=self.specialist_type.name, fio=self.fio)
+        return "{type} {full_name}".format(type=self.specialist_type.name, full_name=self.user.get_full_name())

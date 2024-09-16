@@ -1,9 +1,11 @@
-from django.db.models import CharField, BooleanField, ManyToManyField, EmailField, TextField, PositiveIntegerField, DateField
-
-from project.utils.models import BaseModel
+from django.db.models import (BooleanField, CharField, DateField, EmailField,
+                              ManyToManyField, TextField)
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
-from .managers import ParentManager, ChildManager
+
+from project.utils.models import BaseModel
+
+from .managers import ChildManager, ParentManager
 
 
 class Visitor(BaseModel):
@@ -14,7 +16,7 @@ class Visitor(BaseModel):
     is_child = BooleanField(_("Is children?"), default=False)
     parent_problem = TextField(_("Parent problem"), blank=True)
 
-    children = ManyToManyField("visitors.Visitor", verbose_name=_("Children"), blank=True)
+    children = ManyToManyField("visitors.Visitor", verbose_name=_("Children"), related_name="child", blank=True)
     birth_data = DateField(_("Birth date"), null=True, blank=True)
 
     reason_for_request = TextField(_("Reason for request"), default="", blank=True)

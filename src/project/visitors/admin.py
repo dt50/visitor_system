@@ -1,20 +1,24 @@
-from django.contrib import admin
-from .models import Visitor, Parent, Child
-from django.utils.translation import gettext_lazy as _
-from .forms import VisitorForm
-from django.utils.safestring import mark_safe
-from django.urls import reverse
-from project.utils.admin.utils import model_admin_url
 from datetime import datetime
 
+from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
-@admin.register(Visitor)
+from project.utils.admin.utils import model_admin_url
+
+from .forms import VisitorForm
+from .models import Child, Parent, Visitor
+
+
 class VisitorAdmin(admin.ModelAdmin):
     form = VisitorForm
     fieldsets = (
         (
             None,
-            {"fields": ("fio", "birth_data", "phone_number", "mail", "address", "is_child", "children", "parent_problem",)}
+            {
+                "fields": (
+                    "fio", "birth_data", "phone_number", "mail", "address", "is_child", "children", "parent_problem",
+                )
+            }
         ),
         (
             _("Problem"),
