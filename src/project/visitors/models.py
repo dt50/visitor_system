@@ -32,7 +32,9 @@ class Visitor(BaseModel):
         verbose_name_plural = _("Visitors")
 
     def __str__(self) -> str:
-        return _("{is_child} - {phone_number}:{full_name} - {count_children} children").format(
+        if self.is_child:
+            return "{full_name}".format(full_name=self.fio)
+        return "{is_child} - {phone_number}:{full_name} - {count_children} children".format(
             is_child=_("Child") if self.is_child else _("Parent"),
             phone_number=self.phone_number,
             full_name=self.fio,

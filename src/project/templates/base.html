@@ -1,5 +1,4 @@
 {% load static i18n %}
-{% load allauth %}
 
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
@@ -76,11 +75,6 @@
         <script src={% static 'js/modules/fullcalendar@6_1_11/index.global.min.js' %}></script>
         <script src={% static 'js/modules/fullcalendar@6_1_11/locales-all.global.min.js' %}></script>
 
-        <!-- Babylon -->
-        {#        <script src="https://cdn.babylonjs.com/babylon.js"></script>#}
-        {#        <script src="https://cdn.babylonjs.com/babylon.max.js"></script>#}
-        <script src="{% static 'js/modules/babylon/viewer/babylon.viewer.js' %}"></script>
-
         <!-- Gauntface Logger -->
         <script src="{% static 'js/modules/gauntface/logger/browser-globals.js' %}"></script>
 
@@ -98,7 +92,7 @@
 <div class="mb-1">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand ms-4" href="#">Dsol-Factory</a>
+            <a class="navbar-brand ms-4" href="#">Речевой центр "Все звуки"</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -110,8 +104,27 @@
                         <a class="nav-link active" aria-current="page"
                            href="#">{% translate "Homepage" %}</a>
                     </li>
-
+                
                     {% if request.user.is_authenticated %}
+                        <li class="ms-2 nav-item navbar-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <i class="bi bi-person-lines-fill pe-2"></i>
+                                <span>{% translate "Employees" %}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'employees:employees_list' %}">
+                                        <span>{% translate "Employees list" %}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'employees:employee_create' %}">
+                                        <span>{% translate "Hire employee" %}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     {% else %}
                     {% endif %}
                 </ul>

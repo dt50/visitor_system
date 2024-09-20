@@ -90,10 +90,13 @@ THIRD_PARTY_APPS = [
     "hijack",
     "hijack.contrib.admin",
     "phonenumber_field",
+    "django_celery_beat",
+    "django_celery_results"
 ]
 LOCAL_APPS = [
     "project.visitors",
     "project.employees",
+    "project.visits",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

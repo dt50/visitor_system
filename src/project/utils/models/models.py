@@ -1,5 +1,4 @@
-from django.db.models import (DateTimeField,
-                              Model)
+from django.db.models import DateTimeField, Model
 from django.utils.translation import gettext as _
 
 

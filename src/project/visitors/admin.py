@@ -9,6 +9,7 @@ from .forms import VisitorForm
 from .models import Child, Parent, Visitor
 
 
+@admin.register(Visitor)
 class VisitorAdmin(admin.ModelAdmin):
     form = VisitorForm
     fieldsets = (

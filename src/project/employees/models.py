@@ -1,5 +1,5 @@
 from django.db.models import (PROTECT, CharField, ForeignKey, ManyToManyField,
-                              SmallIntegerField)
+                              SmallIntegerField, TextField)
 from django.utils.translation import gettext_lazy as _
 
 from project.utils.models import BaseModel
@@ -7,6 +7,7 @@ from project.utils.models import BaseModel
 
 class SpecialistTypes(BaseModel):
     name = CharField(_("Specialist type name"), max_length=255)
+    description = TextField(_("Specialist type description"), default="")
 
     class Meta:
         db_table = "specialist_types"
@@ -56,3 +57,20 @@ class Employees(BaseModel):
 
     def __str__(self):
         return "{type} {full_name}".format(type=self.specialist_type.name, full_name=self.user.get_full_name())
+
+    def get_working_days(self):
+        return [day.shortened_name for day in self.working_days.all()]
+
+    def working_schedule(self):
+        working_days = self.working_days.all()
+        working_schedules = self.visits_set.all()
+
+        result = {
+            day: [
+                workings.time_visit.all().filter(date=day)
+                for workings in working_schedules
+            ]
+            for day in working_days
+        }
+
+        return result

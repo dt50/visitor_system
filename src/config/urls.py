@@ -13,6 +13,7 @@ urlpatterns = (
         [
             path("i18n/", include("django.conf.urls.i18n")),
             path(settings.ADMIN_URL + 'doc/', include('django.contrib.admindocs.urls')),
+            path("employees/", include("project.employees.urls")),
         ]
         + i18n_patterns(path(settings.ADMIN_URL, admin.site.urls))
         + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

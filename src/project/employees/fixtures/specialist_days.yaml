@@ -1,0 +1,68 @@
+- model: employees.specialisttypes
+  pk: 1
+  fields:
+    create: 2024-09-16 17:20:50.805221
+    update: 2024-09-16 17:20:50.805334
+    name: Нейропсихолог
+- model: employees.specialisttypes
+  pk: 2
+  fields:
+    create: 2024-09-16 17:20:55.788159
+    update: 2024-09-16 17:20:55.788219
+    name: Логопед
+- model: employees.workingdays
+  pk: 1
+  fields:
+    create: 2024-09-16 17:20:04.145594
+    update: 2024-09-16 17:20:04.145654
+    order: 1
+    name: Понедельник
+    shortened_name: Пн
+- model: employees.workingdays
+  pk: 2
+  fields:
+    create: 2024-09-16 17:20:11.522968
+    update: 2024-09-16 17:20:11.523033
+    order: 2
+    name: Вторник
+    shortened_name: Вт
+- model: employees.workingdays
+  pk: 3
+  fields:
+    create: 2024-09-16 17:20:17.427734
+    update: 2024-09-16 17:20:17.427794
+    order: 3
+    name: Среда
+    shortened_name: Ср
+- model: employees.workingdays
+  pk: 4
+  fields:
+    create: 2024-09-16 17:20:23.741629
+    update: 2024-09-16 17:20:23.741690
+    order: 4
+    name: Четверг
+    shortened_name: Чт
+- model: employees.workingdays
+  pk: 5
+  fields:
+    create: 2024-09-16 17:20:29.376100
+    update: 2024-09-16 17:20:29.376159
+    order: 5
+    name: Пятница
+    shortened_name: Пт
+- model: employees.workingdays
+  pk: 6
+  fields:
+    create: 2024-09-16 17:20:36.186288
+    update: 2024-09-16 17:20:36.186344
+    order: 6
+    name: Суббота
+    shortened_name: Сб
+- model: employees.workingdays
+  pk: 7
+  fields:
+    create: 2024-09-16 17:20:43.505469
+    update: 2024-09-16 17:20:43.505542
+    order: 7
+    name: Воскресенье
+    shortened_name: Вс

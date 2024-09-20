@@ -76,8 +76,3 @@ class EmployeesAdmin(admin.ModelAdmin):
     @admin.display(description=_("Full name"))
     def get_full_name(self, obj):
         return obj.user.get_full_name()
-
-
-    @admin.display(description=_("Working days"))
-    def get_working_days(self, obj):
-        return ", ".join([day.shortened_name for day in obj.working_days.all()])

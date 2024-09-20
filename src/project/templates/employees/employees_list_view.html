@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static i18n employee_extras %}
+
+{% block content %}
+
+    <div class="d-flex justify-content-around flex-wrap">
+        {% for employee in object_list %}
+            <div class="d-flex flex-column shadow-box mb-3 p-4">
+                <div class="d-flex flex-row">
+                    <div class="shadow-box p-4 me-4"></div>
+                    <div class="d-flex flex-column flex-fill text-center">
+                        <div>{{ employee.user.get_full_name }}</div>
+                        <div>{{ employee.specialist_type.name }}</div>
+                    </div>
+                </div>
+                <div class="p-2 mt-4">
+                    <div>
+                        <span class="d-block text-end fs-6 mb-2">{% translate 'Working days' %}</span>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                {% for day in working_days %}
+                                    <th>{{ day.shortened_name }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            <tr>
+                                {% with working_schedule=employee.working_schedule %}
+                                    {% for day in working_days %}
+                                        <th>
+                                            {% if day in employee.working_days.all %}
+                                                {% for schedules in working_schedule|get_working_time:day %}
+                                                    {% for schedule in schedules %}
+                                                        <span class="d-block">{{ schedule.time }}</span>
+                                                    {% endfor %}
+                                                {% empty %}
+                                                    <div class="text-center">
+                                                        <span class="d-block" style="width: min-content;">{% translate 'Empty day' %}</span>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </th>
+                                    {% endfor %}
+                                {% endwith %}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4">
+                    <span>{% translate 'Hire date' %}: {{ employee.user.date_joined|date }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}
+
+{% comment %}
+
+{% endcomment %}

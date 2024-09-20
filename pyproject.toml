@@ -73,6 +73,9 @@ django-hijack = "^3.4.5"
 randomcolor = "^0.4.4.6"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.0.0"}
 django-redis = "^5.4.0"
+celery = {extras = ["auth", "librabbitmq", "msgpack", "redis"], version = "^5.4.0"}
+django-celery-results = "^2.5.1"
+django-celery-beat = "^2.7.0"
 
 [build-system]
 requires = ["poetry-core"]
